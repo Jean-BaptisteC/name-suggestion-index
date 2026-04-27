@@ -2725,6 +2725,7 @@
     },
     {
       "displayName": "Ford's Garage",
+      "id": "fordsgarage-96af40",
       "locationSet": {"include": ["us"]},
       "tags": {
         "amenity": "restaurant",
