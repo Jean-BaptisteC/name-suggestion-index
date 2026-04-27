@@ -123,7 +123,7 @@ read: async (cache: NsiCache, loco: LocationConflation) => {
         itemCount++;
 
         if (item.templateSource) {    // It's a template item
-          cache.path[tkv].templates.push(item);
+          cache.path[tkv].templates!.push(item);
           continue;
         }
 
@@ -442,14 +442,15 @@ expandTemplates: (cache: NsiCache, loco: LocationConflation) => {
               const props = token.split('.');
               props.shift();   // Ignore first 'source'. It's just for show.
 
-              let source: any = sourceItem;
+              let source: unknown = sourceItem;
               while (props.length) {
                 const prop = props.shift()!;
-                const found = source[prop];
+                if (typeof source !== 'object' || source === null) break;
+                const found = (source as Record<string, unknown>)[prop];
                 if (typeof found === 'object' && found !== null) {
                   source = found;
                 } else {
-                  replacement = found;
+                  replacement = found as string;
                 }
               }
               return replacement;

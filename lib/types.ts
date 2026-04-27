@@ -40,7 +40,7 @@ export interface NsiCategoryProperties {
   path: NsiPath;
   skipCollection?: boolean;
   preserveTags?: string[];
-  exclude: NsiExclude;
+  exclude?: NsiExclude;
 }
 
 /** A single NSI item representing a brand/operator/network/flag. */
@@ -67,7 +67,11 @@ export interface NsiTemplateItem {
 export interface NsiCategory {
   properties: NsiCategoryProperties;
   items: NsiItem[];
-  templates: NsiTemplateItem[];
+  /**
+   * Template items (only present in source data loaded via {@link fileTree.read}).
+   * Absent in the published `nsi.json` and in caller-supplied data.
+   */
+  templates?: NsiTemplateItem[];
 }
 
 /** The full NSI dataset: an object keyed by {@link NsiPath}. */
@@ -233,19 +237,24 @@ export interface NsiWarningsJSON {
 
 /**
  * Properties that define an iD/Rapid Preset.
+ *
+ * Note: `locationSet` and `matchScore` are NSI extensions — they are always
+ * present on the presets that {@link buildIDPresets} generates, but the
+ * source iD presets supplied as input do not have them.
+ *
  * @see https://github.com/ideditor/schema-builder/blob/main/schemas/preset.json
  */
 export interface IDPreset extends HasLocationSet {
   /** Display name */
   name: string;
   /** Region IDs where this preset is or isn't valid. See: https://github.com/ideditor/location-conflation */
-  locationSet: LocationSet;
+  locationSet?: LocationSet;
   /** Name of preset icon which represents this preset */
   icon: string;
   /** Geometry types this Preset works with */
   geometry: string[];
   /** Score for ranking search results */
-  matchScore: number;
+  matchScore?: number;
   /** URL of a remote image that is more specific than 'icon' */
   imageURL?: string;
   /** Alternate names that may be displayed in the UI */

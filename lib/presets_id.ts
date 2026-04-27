@@ -37,6 +37,153 @@ export interface BuildIDPresetsResult {
 }
 
 
+// Exceptions where the NSI `key/value` doesn't match the iD preset path `key/value`.
+// See also https://github.com/openstreetmap/iD/issues/11527
+// id-tagging-schema occasionally moves their presets around, changing their presetIDs.
+const presetPathOverrides: Record<string, string> = {
+  'highway/bus_stop':        'public_transport/platform/bus_point',
+  'amenity/ferry_terminal':  'public_transport/station_ferry',
+  'amenity/college':         'education/college',
+  'amenity/driving_school':  'education/driving_school',
+  'amenity/dancing_school':  'education/dancing_school',
+  'amenity/kindergarten':    'education/kindergarten',
+  'amenity/language_school': 'education/language_school',
+  'amenity/music_school':    'education/music_school',
+  'amenity/prep_school':     'education/prep_school',
+  'amenity/school':          'education/school',
+  'amenity/university':      'education/university',
+  'emergency/water_rescue':  'emergency/lifeboat_station'
+};
+
+// Tags that NSI allows to process as multi-valued
+const semicolonSplittedKeys = ['beauty', 'clothes', 'cuisine', 'healthcare:speciality', 'social_facility', 'sport', 'vending', 'waste'];
+
+// Prefer a wiki commons logo for these QIDs.
+// Related issues list: iD#6361, NSI#2798, NSI#3122, NSI#8042, NSI#8373
+const preferCommons: Record<string, boolean> = {
+  Q177054: true,    // Burger King
+  Q524757: true,    // KFC
+  Q779845: true,    // CBA
+  Q1205312: true,   // In-N-Out
+  Q10443115: true,  // Carlings
+  Q38076: true      // McDonald's
+};
+
+
+/** Resolves the iD preset path to look under for a given NSI tkv. */
+function resolvePresetPath(tkv: NsiPath, k: string, v: string, kv: string, ferryIndex: number): string {
+  if (tkv === 'transit/route/ferry') {
+    return ferryIndex === 0 ? 'type/route/ferry' : 'route/ferry';
+  }
+  if (k === 'route') return `type/route/${v}`;
+  return presetPathOverrides[kv] || kv;
+}
+
+
+/** Picks the most specific iD preset matching an NSI item's tags. */
+function pickBestChildPreset(
+  childPresets: Map<string, IDPreset>,
+  tags: OsmTags
+): { presetID?: string; preset?: IDPreset } {
+  if (childPresets.size === 0) return {};
+
+  if (childPresets.size === 1) {
+    const entry = childPresets.entries().next().value;
+    return entry ? { presetID: entry[0], preset: entry[1] } : {};
+  }
+
+  // The best iD preset for an NSI entry is determined by count of tags that have
+  // matched (more is better) and position for multi-value tags (e.g. cuisine)
+  let matchTagsCount = 0;
+  let matchSemicolonRating = 0;
+  let matchPresetPath: string | undefined;
+  let matchPreset: IDPreset | undefined;
+
+  for (const [checkPresetPath, checkPreset] of childPresets) {
+    const checkPresetTags = Object.entries(checkPreset.tags as OsmTags);
+    let currentMatchSemicolonRating = 0;
+
+    const isPresetMatch = checkPresetTags.every(kv => {
+      const osmKey = kv[0];
+      const osmVal = kv[1];
+
+      const nsiVal = tags[osmKey];
+      if (!nsiVal) return false;
+
+      if (semicolonSplittedKeys.includes(osmKey)) {
+        const vals = nsiVal.split(';');
+        const findResult = vals.indexOf(osmVal);
+        if (findResult === -1) return false;
+        // For a smaller element index rating will be higher
+        currentMatchSemicolonRating -= findResult;
+        return true;
+      }
+      return (osmVal === nsiVal);
+    });
+
+    // If rating of current element is higher than the saved one, we overwrite saved
+    if (isPresetMatch && (
+      (checkPresetTags.length > matchTagsCount) ||
+      (checkPresetTags.length === matchTagsCount && currentMatchSemicolonRating > matchSemicolonRating)
+    )) {
+      matchTagsCount = checkPresetTags.length;
+      matchSemicolonRating = currentMatchSemicolonRating;
+      matchPresetPath = checkPresetPath;
+      matchPreset = checkPreset;
+    }
+  }
+
+  return { presetID: matchPresetPath, preset: matchPreset };
+}
+
+
+/** Picks a logo URL from wikidata for a given QID. */
+function pickLogoURL(qid: string, wikidata: WikidataMap): string | undefined {
+  const logoURLs = wikidata[qid] && wikidata[qid].logos;
+  if (!logoURLs) return undefined;
+  if (logoURLs.wikidata && preferCommons[qid]) return logoURLs.wikidata;
+  if (logoURLs.facebook) return logoURLs.facebook;
+  return logoURLs.wikidata;
+}
+
+
+/**
+ * Collects search terms for an NSI item — its matchNames plus name-like tag values.
+ */
+function collectTerms(
+  item: { matchNames?: string[]; tags: OsmTags },
+  primaryName: RegExp,
+  alternateName: RegExp,
+  notName: RegExp
+): Set<string> {
+  const terms = new Set(item.matchNames || []);
+  for (const osmkey of Object.keys(item.tags)) {
+    if (osmkey === 'name') continue;      // exclude `name` tag, as iD prioritizes it above `preset.terms` already
+    if (notName.test(osmkey)) continue;   // osmkey is not a namelike tag, skip
+    if (primaryName.test(osmkey) || alternateName.test(osmkey)) {
+      terms.add(item.tags[osmkey].toLowerCase());
+    }
+  }
+  return terms;
+}
+
+
+/**
+ * Returns the `fields` array for an NSI preset when `^name` is being preserved,
+ * or `undefined` otherwise.
+ *
+ * If we're preserving the `name` tag, make sure both "name" and "brand"/"operator"
+ * fields are shown.  This triggers iD to lock the brand/operator field but allow
+ * edits to the "name" field.
+ */
+function buildFields(t: string, presetID: string, preserveTags: string[]): string[] | undefined {
+  if (!preserveTags.some(s => s === '^name')) return undefined;
+  if (t === 'brands')    return ['name', 'brand', `{${presetID}}`];
+  if (t === 'operators') return ['name', 'operator', `{${presetID}}`];
+  return undefined;
+}
+
+
 /**
  * Build iD/Rapid presets from NSI data.
  *
@@ -120,33 +267,9 @@ export function buildIDPresets(data: NsiData, opts: BuildIDPresetsOptions): Buil
     const tree = trees[t as NsiTree];
     const kv = `${k}/${v}`;
 
-    let presetPath = kv;
-
-    // Exceptions where the NSI `key/value` doesn't match the iD preset path `key/value`
-    // See also https://github.com/openstreetmap/iD/issues/11527
-    // id-tagging-schema occasionally moves their presets around, changing their presetIDs.
-    if (k === 'route')                     presetPath = `type/route/${v}`;   // Route Relation
-    if (kv === 'highway/bus_stop')         presetPath = 'public_transport/platform/bus_point';
-    if (kv === 'amenity/ferry_terminal')   presetPath = 'public_transport/station_ferry';
-    if (kv === 'amenity/college')          presetPath = 'education/college';
-    if (kv === 'amenity/driving_school')   presetPath = 'education/driving_school';
-    if (kv === 'amenity/dancing_school')   presetPath = 'education/dancing_school';
-    if (kv === 'amenity/kindergarten')     presetPath = 'education/kindergarten';
-    if (kv === 'amenity/language_school')  presetPath = 'education/language_school';
-    if (kv === 'amenity/music_school')     presetPath = 'education/music_school';
-    if (kv === 'amenity/prep_school')      presetPath = 'education/prep_school';
-    if (kv === 'amenity/school')           presetPath = 'education/school';
-    if (kv === 'amenity/university')       presetPath = 'education/university';
-    if (kv === 'emergency/water_rescue')   presetPath = 'emergency/lifeboat_station';
-
-    // Ferry hack! ⛴
-    if (tkv === 'transit/route/ferry') {
-      if (!ferryCount++) {
-        presetPath = 'type/route/ferry';  // Route Relation
-      } else {
-        presetPath = 'route/ferry';  // Way
-      }
-    }
+    // Ferry hack! ⛴ - duplicated tkv generates `type/route/ferry` then `route/ferry`
+    const ferryIndex = (tkv === 'transit/route/ferry') ? ferryCount++ : 0;
+    const presetPath = resolvePresetPath(tkv, k, v, kv, ferryIndex);
 
     // Which wikidata tag is considered the "main" tag for this tree?
     const wdTag = tree.mainTag;
@@ -174,139 +297,33 @@ export function buildIDPresets(data: NsiData, opts: BuildIDPresetsOptions): Buil
       const qid = tags[wdTag];
       if (!qid || !/^Q\d+$/.test(qid)) continue;   // wikidata tag missing or looks wrong..
 
-      let presetID: string | undefined;
-      let preset: IDPreset | undefined;
-
-      // Sometimes we can choose a more specific iD preset then `key/value`..
-      // Attempt to match a `key/value/extravalue`
-      if (childPresets.size > 1) {
-        // The best iD preset for an NSI entry is determined by count of tags that have
-        // matched (more is better) and position for multi-value tags (e.g. cuisine)
-        let matchTagsCount = 0;
-        let matchSemicolonRating = 0;
-
-        let matchPresetPath;
-        let matchPreset;
-
-        for (const [checkPresetPath, checkPreset] of childPresets) {
-          const checkPresetTags = Object.entries(checkPreset.tags as OsmTags);
-          let currentMatchSemicolonRating = 0;
-
-          const isPresetMatch = checkPresetTags.every(kv => {
-            // Tags that NSI allows to process as multi-valued
-            const semicolonSplittedKeys = ['beauty', 'clothes', 'cuisine', 'healthcare:speciality', 'social_facility', 'sport', 'vending', 'waste'];
-            const osmKey = kv[0];
-            const osmVal = kv[1];
-
-            const nsiVal = tags[osmKey];
-            if (!nsiVal) {
-              return false;
-            }
-            if (semicolonSplittedKeys.includes(osmKey)) {
-              const vals = nsiVal.split(';');
-              const findResult = vals.indexOf(osmVal);
-              if (findResult === -1) {
-                return false;
-              }
-              // For a smaller element index rating will be higher
-              currentMatchSemicolonRating -= findResult;
-              return true;
-            }
-            return (osmVal === nsiVal);
-          });
-
-          // If rating of current element is higher than the saved one, we overwrite saved
-          if (isPresetMatch && (
-            (checkPresetTags.length > matchTagsCount) ||
-            (checkPresetTags.length === matchTagsCount && currentMatchSemicolonRating > matchSemicolonRating)
-          )) {
-            matchTagsCount = checkPresetTags.length;
-            matchSemicolonRating = currentMatchSemicolonRating;
-            matchPresetPath = checkPresetPath;
-            matchPreset = checkPreset;
-          }
-        }
-
-        presetID = matchPresetPath;
-        preset = matchPreset;
-      }
-
-      // fallback to the first `key/value`
-      if (!preset && childPresets.size === 1) {
-        const presetKV = childPresets.entries().next().value;
-        if (presetKV) {
-          presetID = presetKV[0];
-          preset = presetKV[1];
-        }
-      }
-
-      // still no match?
-      // fallback to generic like `amenity/yes`, `shop/yes`
+      // Sometimes we can choose a more specific iD preset than `key/value`,
+      // otherwise fall back to a generic like `amenity/yes`, `shop/yes`.
+      let { presetID, preset } = pickBestChildPreset(childPresets, tags);
       if (!preset) {
         presetID = k;
         preset = sourcePresets[presetID];
         missing.add(tkv);
       }
-      // *still* no match?
-      // bail out of this category
-      if (!preset) {
-        continue;
-      }
+      if (!preset) continue;   // *still* no match - bail out
 
       // Gather search terms - include all primary/alternate names and matchNames
       // (There is similar code in lib/matcher.ts)
-      const terms = new Set(item.matchNames || []);
-      for (const osmkey of Object.keys(tags)) {
-        if (osmkey === 'name') continue;      // exclude `name` tag, as iD prioritizes it above `preset.terms` already
-        if (notName.test(osmkey)) continue;   // osmkey is not a namelike tag, skip
-
-        if (primaryName.test(osmkey) || alternateName.test(osmkey)) {
-          terms.add(tags[osmkey].toLowerCase());
-        }
-      }
+      const terms = collectTerms(item, primaryName, alternateName, notName);
 
       // generate our target preset
       const targetID = `${presetID}/${item.id}`;
 
       const targetTags: OsmTags = {};
       targetTags[wdTag] = tags[wdTag]; // add the `*:wikidata` tag
-      for (const k in preset.tags) {     // prioritize NSI tags over iD preset tags (for `vending`, `cuisine`, etc)
-        targetTags[k] = tags[k] || preset.tags[k];
+      for (const presetKey in preset.tags) {  // prioritize NSI tags over iD preset tags (for `vending`, `cuisine`, etc)
+        targetTags[presetKey] = tags[presetKey] || preset.tags[presetKey];
       }
 
-      // Prefer a wiki commons logo sometimes..
-      // Related issues list: iD#6361, NSI#2798, NSI#3122, NSI#8042, NSI#8373
-      const preferCommons: Record<string, boolean> = {
-        Q177054: true,    // Burger King
-        Q524757: true,    // KFC
-        Q779845: true,    // CBA
-        Q1205312: true,   // In-N-Out
-        Q10443115: true,   // Carlings
-        Q38076: true   // McDonald's
-      };
+      const logoURL = pickLogoURL(qid, wikidata);
 
-      let logoURL;
-      const logoURLs = wikidata[qid] && wikidata[qid].logos;
-      if (logoURLs) {
-        if (logoURLs.wikidata && preferCommons[qid]) {
-          logoURL = logoURLs.wikidata;
-        } else if (logoURLs.facebook) {
-          logoURL = logoURLs.facebook;
-        } else {
-          logoURL = logoURLs.wikidata;
-        }
-      }
-
-      // Special rule for "name" fields:
-      // If we're preserving the `name` tag, make sure both "name" and "brand" fields are shown.
-      // This triggers iD to lock the "brand" field but allow edits to the "name" field.
       const preserveTags = item.preserveTags || properties.preserveTags || [];
-      let fields;
-      if (t === 'brands' && preserveTags.some(s => s === '^name')) {
-        fields = ['name', 'brand', `{${presetID}}`];
-      } else if (t === 'operators' && preserveTags.some(s => s === '^name')) {
-        fields = ['name', 'operator', `{${presetID}}`];
-      }
+      const fields = buildFields(t, presetID!, preserveTags);
 
       const targetPreset = {
         name:         item.displayName,

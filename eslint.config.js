@@ -120,7 +120,7 @@ export default [
     }
   },
   {
-    files: [ 'lib/*', 'scripts/*', 'test/*' ],
+    files: [ 'lib/*', 'scripts/*', 'test/*.{js,ts}' ],
     languageOptions: {
       globals: {
         ...globals.node,

@@ -18,6 +18,7 @@ import { simplify } from '../lib/simplify.ts';
 import { sortObject } from '../lib/sort_object.ts';
 // import { stemmer } from '../lib/stemmer.ts';
 import { validate } from '../lib/validate.ts';
+
 import type {
   NsiCache,
   NsiGenericWordsJSON,

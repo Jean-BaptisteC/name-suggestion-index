@@ -34,7 +34,8 @@
   "include": [
     "lib/**/*",
     "scripts/**/*",
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ],
   "exclude": [
     "node_modules",
