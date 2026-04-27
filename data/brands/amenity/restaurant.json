@@ -2724,6 +2724,17 @@
       }
     },
     {
+      "displayName": "Ford's Garage",
+      "locationSet": {"include": ["us"]},
+      "tags": {
+        "amenity": "restaurant",
+        "brand": "Ford's Garage",
+        "brand:wikidata": "Q106623578",
+        "cuisine": "american;burger",
+        "name": "Ford's Garage"
+      }
+    },
+    {
       "displayName": "Foster's Grille",
       "id": "fostersgrille-0bf16a",
       "locationSet": {
