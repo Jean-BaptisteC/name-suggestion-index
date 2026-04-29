@@ -413,9 +413,6 @@
           "hr", 
           "it", 
           "tr"
-        ],
-        "exclude": [
-          "bg"
         ]
       },
       "tags": {
@@ -425,23 +422,15 @@
       }
     },
     {
-      "displayName": "Electrip Bulgaria",
-      "id": "Electrip Bulgaria",
+      "displayName": "electrip (Bulgaria)",
       "locationSet": {
         "include": [
           "bg"
-        ],
-        "exclude": [
-          "gr",
-          "hr",
-          "it",
-          "tr"
         ]
       },
       "tags": {
         "amenity": "charging_station",
-        "name": "Electrip Bulgaria",
-        "brand": "Electrip Bulgaria",
+        "brand": "electrip",
         "brand:wikidata": "Q139373328"
       }
     },
