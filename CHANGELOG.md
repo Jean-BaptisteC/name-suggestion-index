@@ -78,3 +78,10 @@ _Breaking changes, which may affect downstream projects, are marked with a_ тЪая
 [#4906]: https://github.com/osmlab/name-suggestion-index/issues/4906
 [#4924]: https://github.com/osmlab/name-suggestion-index/issues/4924
 [#4964]: https://github.com/osmlab/name-suggestion-index/issues/4964
+
+
+<!-- sync:
+version=1
+source=https://github.com/rapideditor/agent-practices/blob/main/templates/CHANGELOG.md
+instructions="Create only if missing, substituting the project name and repo details for this project; never overwrite the details of an existing changelog."
+-->

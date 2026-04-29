@@ -22,3 +22,10 @@ git push origin main "$VERSION"
 npm login    # if needed, session tokens last 2 hours
 bun publish
 ```
+
+<!-- sync:
+version=1
+source=https://github.com/rapideditor/agent-practices/blob/main/templates/RELEASE.md
+Local override: NSI uses a custom manual release flow (wikidata fetch, dist build,
+     `bun publish` to npm). The canonical template's `/release` workflow does not apply here.
+-->
