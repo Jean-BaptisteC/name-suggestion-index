@@ -642,6 +642,7 @@ function syncNsiIdentifiers(qid: ItemId, entity: WdEntity): void {
   let msg;
   for (i; i < nsiClaims.length; i++) {
     const claim = nsiClaims[i];
+    const claimID = claim.id as string;
 
     if (i < nsiIds.length) {   // match existing claims to ids, and force all ranks to 'normal'
       let msg;
@@ -651,16 +652,16 @@ function syncNsiIdentifiers(qid: ItemId, entity: WdEntity): void {
         } else if (claim.rank !== 'normal') {
           msg = `Updating NSI identifier for ${qid}: rank '${claim.rank}' -> 'normal'`;
         }
-        enqueueWbEdit({ qid: qid, guid: claim.id, newValue: nsiIds[i], rank: 'normal', references: references, msg: msg });
+        enqueueWbEdit({ qid: qid, guid: claimID, newValue: nsiIds[i], rank: 'normal', references: references, msg: msg! });
       }
       if (!claim.references || !claim.references.length) {
         msg = `Updating NSI identifier reference for ${qid}`;
-        enqueueWbEdit({ qid: qid, guid: claim.id, snaks: references[0], msg: msg });
+        enqueueWbEdit({ qid: qid, guid: claimID, snaks: references[0], msg: msg });
       }
 
     } else {  // remove extra existing claims
       msg = `Removing NSI identifier for ${qid}: ${claim.value}`;
-      enqueueWbEdit({ qid: qid, guid: claim.id, msg: msg });
+      enqueueWbEdit({ qid: qid, guid: claimID, msg: msg });
     }
   }
 

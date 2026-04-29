@@ -133,7 +133,9 @@ function pickBestChildPreset(
     }
   }
 
-  return { presetID: matchPresetPath, preset: matchPreset };
+  return matchPreset && matchPresetPath
+    ? { presetID: matchPresetPath, preset: matchPreset }
+    : {};
 }
 
 

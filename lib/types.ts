@@ -16,7 +16,7 @@ export type NsiTree = 'brands' | 'operators' | 'transit' | 'flags';
 export interface NsiTreeProperties {
   emoji: string;
   mainTag: string;
-  sourceTags?: string[];
+  sourceTags?: string[] | undefined;
   nameTags: {
     primary: string;    // regex pattern string
     alternate: string;  // regex pattern string

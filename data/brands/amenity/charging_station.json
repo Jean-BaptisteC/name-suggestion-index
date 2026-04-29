@@ -406,14 +406,9 @@
     },
     {
       "displayName": "electrip",
-      "id": "electrip-2e2ce9",
+      "id": "electrip-7d70e9",
       "locationSet": {
-        "include": [
-          "gr", 
-          "hr", 
-          "it", 
-          "tr"
-        ]
+        "include": ["gr", "hr", "it", "tr"]
       },
       "tags": {
         "amenity": "charging_station",
@@ -423,11 +418,8 @@
     },
     {
       "displayName": "electrip (Bulgaria)",
-      "locationSet": {
-        "include": [
-          "bg"
-        ]
-      },
+      "id": "electrip-59a92d",
+      "locationSet": {"include": ["bg"]},
       "tags": {
         "amenity": "charging_station",
         "brand": "electrip",

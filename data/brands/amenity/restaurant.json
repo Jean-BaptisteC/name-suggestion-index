@@ -49,22 +49,6 @@
   },
   "items": [
     {
-      "displayName": "Zeeks Pizza",
-      "id": "Zeeks Pizza",
-      "locationSet": {
-        "include": [
-          "us"
-        ]
-      },
-      "tags": {
-        "amenity": "restaurant",
-        "name": "Zeeks Pizza",
-        "brand": "Zeeks Pizza",
-        "brand:wikidata": "Q139585447",
-        "cuisine": "pizza"
-      }
-    },
-    {
       "displayName": "'t Zusje",
       "id": "tzusje-2b67bf",
       "locationSet": {"include": ["nl"]},
@@ -8566,6 +8550,18 @@
         "name:zh": "云尚过桥米线",
         "name:zh-Hans": "云尚过桥米线",
         "name:zh-Hant": "雲尚過橋米綫"
+      }
+    },
+    {
+      "displayName": "Zeeks Pizza",
+      "id": "zeekspizza-96af40",
+      "locationSet": {"include": ["us"]},
+      "tags": {
+        "amenity": "restaurant",
+        "brand": "Zeeks Pizza",
+        "brand:wikidata": "Q139585447",
+        "cuisine": "pizza",
+        "name": "Zeeks Pizza"
       }
     },
     {
