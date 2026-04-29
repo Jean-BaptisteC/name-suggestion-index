@@ -14,12 +14,12 @@ This project uses **Bun** as our development environment.
 
 If you want to contribute to name-suggestion-index, you'll probably need to:
 - [Install Bun](https://bun.com/docs/installation)
-- `git clone` name-suggestion-index
+- `git clone https://github.com/osmlab/name-suggestion-index`
 - `cd` into the project folder
 - `bun install` the dependencies
 
 As you change things, you'll want to `bun run all` to ensure that things are working.
-(This command just runs `clean`, `lint`, `build`, and `test`.)
+(This command runs `clean`, `check`, `build`, and `test`.)
 
 You can also type-check the project without emitting files:
 - `bun run check:types` — runs `tsc --noEmit` across all source, script, and test files.
@@ -71,9 +71,3 @@ We can be found in:
 We welcome contributions made with the help of AI tools.
 If you use them, you are responsible for understanding and reviewing the output before submitting it.
 Generated code, issues, and PR descriptions should be clear and relevant — not verbose for the sake of it.
-
-<!-- sync:
-version=1
-source=https://github.com/rapideditor/agent-practices/blob/main/templates/CONTRIBUTING.md
-instructions="keep the GitHub intro and AI-Assisted sections; replace the technology sections with only the technologies that this project uses (language, runtime, package manager, etc.), adapting the install/dev commands from package.json or equivalent; remove sections for technologies not used; include or omit paragraphs marked 'optional:' based on whether the condition applies to this project"
--->

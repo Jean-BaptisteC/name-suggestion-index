@@ -7,6 +7,7 @@
 *.gif binary
 
 # Linguist overrides
+*.css linguist-detectable
 *.json linguist-detectable
 *.jsonc linguist-detectable
 *.json5 linguist-detectable
@@ -16,8 +17,3 @@
 
 docs/** linguist-documentation
 dist/** linguist-generated
-
-# sync:
-# version=1
-# source=https://github.com/rapideditor/agent-practices/blob/main/templates/.gitattributes
-# instructions="adapt file-type entries to this project's actual file types; add missing entries but do not replace local edits"

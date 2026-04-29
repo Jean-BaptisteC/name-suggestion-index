@@ -6,8 +6,10 @@
 
     // Modules
     "module": "ESNext",
+    "moduleDetection": "force",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
 
@@ -21,10 +23,13 @@
     // Type Checking
     "strict": true,
     "noImplicitAny": true,
+    "noImplicitReturns": true,
     "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": false,
     "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": true,
 
     // Some stricter flags (disabled by default)
     "noUnusedLocals": true,
@@ -42,8 +47,3 @@
     "dist"
   ]
 }
-
-// sync:
-// version=1
-// source=https://github.com/rapideditor/agent-practices/blob/main/templates/tsconfig.json
-// instructions="skip entirely if this project does not use TypeScript; otherwise apply structural changes and new compiler options from the source; flag any option that differs in value and ask before overwriting, since local values may be intentional"
