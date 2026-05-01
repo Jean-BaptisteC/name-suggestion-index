@@ -12468,8 +12468,8 @@
         "include": ["de-by.geojson"]
       },
       "matchNames": [
-        "Rosenheimer Verkehrsgesellschaft",
-        "RoVG",
+        "rosenheimer verkehrsgesellschaft",
+        "rovg",
         "stadtverkehr rosenheim"
       ],
       "tags": {

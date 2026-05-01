@@ -1638,6 +1638,24 @@
       }
     },
     {
+      "displayName": "Nahverkehr Mainfranken",
+      "id": "nahverkehrmainfranken-cbece5",
+      "locationSet": {
+        "include": ["de-by.geojson"]
+      },
+      "matchNames": [
+        "verkehrsunternehmens-verbund mainfranken",
+        "verkehrsverbund mainfranken",
+        "vvm"
+      ],
+      "tags": {
+        "network": "Nahverkehr Mainfranken",
+        "network:short": "NVM",
+        "network:wikidata": "Q131385745",
+        "route": "train"
+      }
+    },
+    {
       "displayName": "Nahverkehrsverbund Schleswig-Holstein",
       "id": "nahverkehrsverbundschleswigholstein-d50f2c",
       "locationSet": {"include": ["de", "dk"]},
@@ -3020,22 +3038,6 @@
         "network": "Verkehrsverbund Kärnten",
         "network:short": "VVK",
         "network:wikidata": "Q2516465",
-        "route": "train"
-      }
-    },
-    {
-      "displayName": "Nahverkehr Mainfranken",
-      "id": "verkehrsverbundmainfranken-da20e0",
-      "locationSet": {"include": ["de-by.geojson"]},
-      "matchNames": [
-        "verkehrsunternehmens-verbund mainfranken",
-        "Verkehrsverbund Mainfranken",
-        "VVM"
-      ],
-      "tags": {
-        "network": "Nahverkehr Mainfranken",
-        "network:short": "NVM",
-        "network:wikidata": "Q131385745",
         "route": "train"
       }
     },
