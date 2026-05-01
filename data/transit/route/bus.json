@@ -12467,6 +12467,11 @@
       "locationSet": {
         "include": ["de-by.geojson"]
       },
+      "matchNames": [
+        "Rosenheimer Verkehrsgesellschaft",
+        "RoVG",
+        "stadtverkehr rosenheim"
+      ],
       "tags": {
         "network": "Münchner Verkehrs- und Tarifverbund",
         "network:guid": "DE-BY-MVV",
@@ -15815,20 +15820,6 @@
       "tags": {
         "network": "ROSA",
         "network:wikidata": "Q77041777",
-        "route": "bus"
-      }
-    },
-    {
-      "displayName": "Rosenheimer Verkehrsgesellschaft",
-      "id": "rosenheimerverkehrsgesellschaft-bfc089",
-      "locationSet": {
-        "include": ["de-by.geojson"]
-      },
-      "matchNames": ["stadtverkehr rosenheim"],
-      "tags": {
-        "network": "Rosenheimer Verkehrsgesellschaft",
-        "network:short": "RoVG",
-        "network:wikidata": "Q2167149",
         "route": "bus"
       }
     },
