@@ -154,6 +154,16 @@
       }
     },
     {
+      "displayName": "arton",
+      "locationSet": {"include": ["sk"]},
+      "matchNames": ["ARTON s.r.o."],
+      "tags": {
+        "advertising": "billboard",
+        "operator": "arton",
+        "operator:wikidata": "Q139601329"
+      }
+    },
+    {
       "displayName": "Astral",
       "id": "astral-5f3ac7",
       "locationSet": {
@@ -216,6 +226,16 @@
         "advertising": "billboard",
         "operator": "BigMedia",
         "operator:wikidata": "Q121621060"
+      }
+    },
+    {
+      "displayName": "bigmedia",
+      "locationSet": {"include": ["sk"]},
+      "matchNames": ["BigMedia, spol. s r.o."],
+      "tags": {
+        "advertising": "billboard",
+        "operator": "bigmedia",
+        "operator:wikidata": "Q139601207"
       }
     },
     {
@@ -579,6 +599,16 @@
       }
     },
     {
+      "displayName": "Gryf",
+      "locationSet": {"include": ["sk"]},
+      "matchNames": ["GRYF MEDIA, s.r.o."],
+      "tags": {
+        "advertising": "billboard",
+        "operator": "Gryf",
+        "operator:wikidata": "Q139601312"
+      }
+    },
+    {
       "displayName": "Horizon",
       "id": "horizon-28ca1f",
       "locationSet": {"include": ["fx"]},
@@ -655,6 +685,16 @@
       "tags": {
         "advertising": "billboard",
         "operator": "Impact"
+      }
+    },
+    {
+      "displayName": "ISPA",
+      "locationSet": {"include": ["sk"]},
+      "matchNames": ["ISPA, spol. s.r.o."],
+      "tags": {
+        "advertising": "billboard",
+        "operator": "ISPA",
+        "operator:wikidata": "Q139601181"
       }
     },
     {
@@ -804,6 +844,16 @@
         "advertising": "billboard",
         "operator": "North Lincolnshire Council",
         "operator:wikidata": "Q17016863"
+      }
+    },
+    {
+      "displayName": "Nubium",
+      "locationSet": {"include": ["sk"]},
+      "matchNames": ["NUBIUM, s. r. o."],
+      "tags": {
+        "advertising": "billboard",
+        "operator": "Nubium",
+        "operator:wikidata": "Q139601227"
       }
     },
     {
