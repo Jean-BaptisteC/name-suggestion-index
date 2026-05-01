@@ -16,6 +16,15 @@ const matchGroups: NsiMatchGroupsJSON['matchGroups'] = matchGroupsJSON.matchGrou
 const trees: Record<NsiTree, NsiTreeProperties> = treesJSON.trees;
 
 
+//  This is an unfortunate TypeScript-ism, essentially it does not consider a class instance
+//  with private or protected members to be type-compatible with itself.
+//  The workaround is to define an interface type so that instead of saying
+//   "buildLocationIndex accepts a LocationConflation instance"
+//  we need to say
+//   "buildLocationIndex accepts something that looks like a LocationConflation instance"
+// @see https://www.reddit.com/r/typescript/comments/wv3d5m/private_properties_different_versions_of_same/
+// @see https://github.com/microsoft/TypeScript/issues/18499 (and related)
+/** LocationConflation _structural_ type - see name-suggestion-index#12150 **/
 export interface LocationResolver {
   registerLocationSets<T extends HasLocationSet>(objects: T[]): (T & HasLocationSetID)[];
   locationSetsAt(loc: Vec2): Map<LocationSetID, number>;
