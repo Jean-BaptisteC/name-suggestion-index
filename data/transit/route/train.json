@@ -3024,16 +3024,18 @@
       }
     },
     {
-      "displayName": "Verkehrsverbund Mainfranken",
+      "displayName": "Nahverkehr Mainfranken",
       "id": "verkehrsverbundmainfranken-da20e0",
-      "locationSet": {"include": ["de"]},
+      "locationSet": {"include": ["de-by.geojson"]},
       "matchNames": [
-        "verkehrsunternehmens-verbund mainfranken"
+        "verkehrsunternehmens-verbund mainfranken",
+        "Verkehrsverbund Mainfranken",
+        "VVM"
       ],
       "tags": {
-        "network": "Verkehrsverbund Mainfranken",
-        "network:short": "VVM",
-        "network:wikidata": "Q2516466",
+        "network": "Nahverkehr Mainfranken",
+        "network:short": "NVM",
+        "network:wikidata": "Q131385745",
         "route": "train"
       }
     },
