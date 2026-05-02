@@ -4421,9 +4421,8 @@
     },
     {
       "displayName": "O!Save",
-      "id": "osave-fb2210",
+      "id": "osave-28d321",
       "locationSet": {"include": ["id", "ph"]},
-      "matchNames": ["o save", "o'save", "o-save"],
       "tags": {
         "brand": "O!Save",
         "brand:wikidata": "Q137685864",
