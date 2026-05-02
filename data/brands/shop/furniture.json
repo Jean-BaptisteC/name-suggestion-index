@@ -147,6 +147,7 @@
     },
     {
       "displayName": "ASKO Nábytek",
+      "id": "askonabytek-8f409c",
       "locationSet": {"include": ["cz"]},
       "tags": {
         "brand": "ASKO Nábytek",
@@ -157,6 +158,7 @@
     },
     {
       "displayName": "ASKO Nábytok",
+      "id": "askonabytok-d1803c",
       "locationSet": {"include": ["sk"]},
       "tags": {
         "brand": "ASKO Nábytok",

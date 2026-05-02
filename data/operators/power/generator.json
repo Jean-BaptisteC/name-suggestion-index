@@ -6507,11 +6507,15 @@
       }
     },
     {
-      "displayName": "Octopus Investments",
-      "id": "octopusinvestments-9ac094",
+      "displayName": "Octopus Energy",
+      "id": "octopusenergy-9ac094",
       "locationSet": {"include": ["gb"]},
+      "matchNames": [
+        "octopus",
+        "octopus investments"
+      ],
       "tags": {
-        "operator": "Octopus Investments",
+        "operator": "Octopus Energy",
         "operator:wikidata": "Q63242134",
         "power": "generator"
       }

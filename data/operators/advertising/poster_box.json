@@ -57,8 +57,9 @@
     },
     {
       "displayName": "bigmedia",
+      "id": "bigmedia-c1d602",
       "locationSet": {"include": ["sk"]},
-      "matchNames": ["BigMedia, spol. s r.o."],
+      "matchNames": ["bigmedia, spol. s r.o."],
       "tags": {
         "advertising": "poster_box",
         "operator": "bigmedia",

@@ -155,8 +155,9 @@
     },
     {
       "displayName": "arton",
+      "id": "arton-a92548",
       "locationSet": {"include": ["sk"]},
-      "matchNames": ["ARTON s.r.o."],
+      "matchNames": ["arton s.r.o."],
       "tags": {
         "advertising": "billboard",
         "operator": "arton",
@@ -219,6 +220,17 @@
       }
     },
     {
+      "displayName": "bigmedia",
+      "id": "bigmedia-a92548",
+      "locationSet": {"include": ["sk"]},
+      "matchNames": ["bigmedia, spol. s r.o."],
+      "tags": {
+        "advertising": "billboard",
+        "operator": "bigmedia",
+        "operator:wikidata": "Q139601207"
+      }
+    },
+    {
       "displayName": "BigMedia",
       "id": "bigmedia-67d580",
       "locationSet": {"include": ["cz"]},
@@ -226,16 +238,6 @@
         "advertising": "billboard",
         "operator": "BigMedia",
         "operator:wikidata": "Q121621060"
-      }
-    },
-    {
-      "displayName": "bigmedia",
-      "locationSet": {"include": ["sk"]},
-      "matchNames": ["BigMedia, spol. s r.o."],
-      "tags": {
-        "advertising": "billboard",
-        "operator": "bigmedia",
-        "operator:wikidata": "Q139601207"
       }
     },
     {
@@ -600,8 +602,9 @@
     },
     {
       "displayName": "Gryf",
+      "id": "gryf-a92548",
       "locationSet": {"include": ["sk"]},
-      "matchNames": ["GRYF MEDIA, s.r.o."],
+      "matchNames": ["gryf media, s.r.o."],
       "tags": {
         "advertising": "billboard",
         "operator": "Gryf",
@@ -689,8 +692,9 @@
     },
     {
       "displayName": "ISPA",
+      "id": "ispa-a92548",
       "locationSet": {"include": ["sk"]},
-      "matchNames": ["ISPA, spol. s.r.o."],
+      "matchNames": ["ispa, spol. s.r.o."],
       "tags": {
         "advertising": "billboard",
         "operator": "ISPA",
@@ -848,8 +852,9 @@
     },
     {
       "displayName": "Nubium",
+      "id": "nubium-a92548",
       "locationSet": {"include": ["sk"]},
-      "matchNames": ["NUBIUM, s. r. o."],
+      "matchNames": ["nubium, s. r. o."],
       "tags": {
         "advertising": "billboard",
         "operator": "Nubium",
