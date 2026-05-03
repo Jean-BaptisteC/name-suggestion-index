@@ -1708,10 +1708,7 @@
       "tags": {
         "amenity": "bicycle_rental",
         "brand": "fLotte",
-        "brand:wikidata": "Q102333872",
-        "operator": "ADFC",
-        "operator:type": "association",
-        "operator:wikidata": "Q24349"
+        "brand:wikidata": "Q102333872"
       }
     },
     {
