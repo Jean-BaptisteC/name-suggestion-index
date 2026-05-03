@@ -799,6 +799,16 @@
       }
     },
     {
+      "displayName": "PadelCity",
+      "locationSet": {"include": ["de"]},
+      "tags": {
+        "leisure": "pitch",
+        "operator": "PadelCity",
+        "operator:wikidata": "Q139622987",
+        "sport": "padel"
+      }
+    },
+    {
       "displayName": "Paintball-Wesenberg",
       "id": "paintballwesenberg-b87489",
       "locationSet": {"include": ["de"]},
