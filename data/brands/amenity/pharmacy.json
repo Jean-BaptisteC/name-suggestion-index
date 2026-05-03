@@ -228,7 +228,7 @@
       "displayName": "Alphega Pharmacy",
       "id": "alphegapharmacy-4d3705",
       "locationSet": {
-        "include": ["gb-lon.geojson"]
+        "include": ["cz","de","es","fx","gb","it","nl","pt","ro","tr"]
       },
       "preserveTags": ["^name"],
       "tags": {
