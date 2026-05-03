@@ -1704,7 +1704,7 @@
     {
       "displayName": "fLotte",
       "id": "flotte-937152",
-      "locationSet": {"include": ["de"]},
+      "locationSet": {"include": ["de-be.geojson"]},
       "tags": {
         "amenity": "bicycle_rental",
         "brand": "fLotte",
@@ -3408,7 +3408,7 @@
     {
       "displayName": "RegioRad Stuttgart",
       "id": "regioradstuttgart-937152",
-      "locationSet": {"include": ["de"]},
+      "locationSet": {"include": ["de-bw.geojson"]},
       "tags": {
         "amenity": "bicycle_rental",
         "brand": "RegioRad Stuttgart",
@@ -4502,7 +4502,7 @@
     {
       "displayName": "Velocity Aachen",
       "id": "velocityaachen-937152",
-      "locationSet": {"include": ["de"]},
+      "locationSet": {"include": ["de-nw.geojson"]},
       "tags": {
         "amenity": "bicycle_rental",
         "brand": "Velocity Aachen",
