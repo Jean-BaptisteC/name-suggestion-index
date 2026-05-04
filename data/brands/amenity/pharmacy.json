@@ -2336,15 +2336,16 @@
       }
     },
     {
-      "displayName": "Jhoots Pharmacy",
-      "id": "jhootspharmacy-b98d4f",
+      "displayName": "JHL Pharmacies",
+      "id": "jhlpharmacies-b98d4f",
       "locationSet": {"include": ["gb"]},
+      "matchNames": ["jhoots", "jhoots pharmacy"],
       "tags": {
         "amenity": "pharmacy",
-        "brand": "Jhoots Pharmacy",
-        "brand:wikidata": "Q91440588",
+        "brand": "JHL Pharmacies",
+        "brand:wikidata": "Q139659869",
         "healthcare": "pharmacy",
-        "name": "Jhoots Pharmacy"
+        "name": "JHL Pharmacies"
       }
     },
     {
