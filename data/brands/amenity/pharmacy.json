@@ -2340,6 +2340,7 @@
       "id": "jhlpharmacies-b98d4f",
       "locationSet": {"include": ["gb"]},
       "matchNames": ["jhoots", "jhoots pharmacy"],
+      "note": "Formally Jhoots Pharmacy",
       "tags": {
         "amenity": "pharmacy",
         "brand": "JHL Pharmacies",
