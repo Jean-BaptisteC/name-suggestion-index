@@ -2001,6 +2001,22 @@
       }
     },
     {
+      "displayName": "Duck Thru",
+      "id": "duckthru-977a71",
+      "locationSet": {
+        "include": [
+          "us-nc.geojson",
+          "us-va.geojson"
+        ]
+      },
+      "tags": {
+        "brand": "Duck Thru",
+        "brand:wikidata": "Q139631383",
+        "name": "Duck Thru",
+        "shop": "convenience"
+      }
+    },
+    {
       "displayName": "Duka",
       "id": "duka-1ca326",
       "locationSet": {"include": ["tz"]},
