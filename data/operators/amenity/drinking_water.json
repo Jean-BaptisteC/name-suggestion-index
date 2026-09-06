@@ -1539,16 +1539,6 @@
       }
     },
     {
-      "displayName": "Veolia Eau",
-      "id": "veoliaeau-02ca9b",
-      "locationSet": {"include": ["fx"]},
-      "tags": {
-        "amenity": "drinking_water",
-        "operator": "Veolia Eau",
-        "operator:wikidata": "Q682599"
-      }
-    },
-    {
       "displayName": "Veřejná zeleň města Brna",
       "id": "verejnazelenmestabrna-a14940",
       "locationSet": {
